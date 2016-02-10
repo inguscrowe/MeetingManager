@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1b002c8d019e4cee8e3b5107555e2baa" Name="Diagram1" ZoomLevel="92">
+        <EntityTypeShape EntityType="MeetingManagerModel.Assignment" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetingManagerModel.Congregation" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetingManagerModel.Meeting" Width="1.5" PointX="6" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetingManagerModel.MeetingAssignment" Width="1.5" PointX="11.25" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetingManagerModel.MeetingDescription" Width="1.5" PointX="3.75" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetingManagerModel.Member" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetingManagerModel.MemberAssignment" Width="1.5" PointX="8.25" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetingManagerModel.ScheduleDate" Width="1.5" PointX="8.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetingManagerModel.ServiceGroup" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetingManagerModel.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetingManagerModel.UnavailableDate" Width="1.5" PointX="5.25" PointY="13.375" IsExpanded="true" />
+        <AssociationConnector Association="MeetingManagerModel.FK_Assignment_Congregation" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetingManagerModel.FK_Assignment_Member" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetingManagerModel.FK_MemberAssignment_Assignment" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetingManagerModel.FK_Meeting_Congregation" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetingManagerModel.FK_MeetingAssignment_Congregation" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetingManagerModel.FK_Member_Congregation" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetingManagerModel.FK_MemberAssignment_Congregation" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetingManagerModel.FK_ScheduleDates_Congregation" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetingManagerModel.FK_Meeting_MeetingDescription" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetingManagerModel.FK_MeetingAssignment_Meeting" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetingManagerModel.FK_Member_ServiceGroup" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetingManagerModel.FK_MemberAssignment_Member" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetingManagerModel.FK_ScheduleDates_Member" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetingManagerModel.FK_ServiceGroup_Member" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetingManagerModel.FK_ServiceGroup_Member1" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetingManagerModel.FK_UnavailableDates_Member" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetingManagerModel.FK_MeetingAssignment_Assignment" />
+        <AssociationConnector Association="MeetingManagerModel.FK_MeetingAssignment_Member" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
