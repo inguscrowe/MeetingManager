@@ -63,6 +63,12 @@
     <Compile Include="EditMeetingAssignment.Designer.cs">
       <DependentUpon>EditMeetingAssignment.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditScheduleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditScheduleForm.Designer.cs">
+      <DependentUpon>EditScheduleForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="HomePage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,11 +113,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScheduleForm.cs">
+    <Compile Include="CreateScheduleForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ScheduleForm.Designer.cs">
-      <DependentUpon>ScheduleForm.cs</DependentUpon>
+    <Compile Include="CreateScheduleForm.Designer.cs">
+      <DependentUpon>CreateScheduleForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="AssignmentForm.resx">
       <DependentUpon>AssignmentForm.cs</DependentUpon>
@@ -121,6 +127,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditMeetingAssignment.resx">
       <DependentUpon>EditMeetingAssignment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditScheduleForm.resx">
+      <DependentUpon>EditScheduleForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HomePage.resx">
       <DependentUpon>HomePage.cs</DependentUpon>
@@ -152,8 +161,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ScheduleForm.resx">
-      <DependentUpon>ScheduleForm.cs</DependentUpon>
+    <EmbeddedResource Include="CreateScheduleForm.resx">
+      <DependentUpon>CreateScheduleForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\DataSources\MeetingManager.MeetingAssignment.datasource" />
     <None Include="Properties\DataSources\MeetingManager.Member.datasource" />

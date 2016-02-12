@@ -12,12 +12,12 @@ using MeetingManager;
 namespace MeetingManagerUI
 {
    
-    public partial class ScheduleForm : Form
+    public partial class CreateScheduleForm : Form
     {
         ClassManager manager = new ClassManager();
         CommonControls cc = new CommonControls();
         HomePage currentHp;
-        public ScheduleForm(Member scheduler,HomePage hp)
+        public CreateScheduleForm(Member scheduler,HomePage hp)
         {
             InitializeComponent();
             Scheduler = scheduler;

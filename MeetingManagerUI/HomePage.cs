@@ -60,7 +60,7 @@ namespace MeetingManagerUI
 
         private void newScheduleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ScheduleForm sf = new ScheduleForm(ThisMember, this);
+            CreateScheduleForm sf = new CreateScheduleForm(ThisMember, this);
             sf.WindowState = FormWindowState.Normal;
             sf.Show();
         }
@@ -71,6 +71,13 @@ namespace MeetingManagerUI
             EditMeetingAssignment ema = new EditMeetingAssignment((Convert.ToInt32(CurrentScheduleGridView.Rows[e.RowIndex].Cells[0].Value)));
             ema.WindowState = FormWindowState.Normal;
             ema.Show();
+        }
+
+        private void removeScheduleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EditScheduleForm esf = new EditScheduleForm();
+            esf.WindowState = FormWindowState.Normal;
+            esf.Show();
         }
 
         

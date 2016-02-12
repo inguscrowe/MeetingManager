@@ -288,15 +288,7 @@ namespace MeetingManager
 
         public List<Member> MembersAvailable(int assignmentId, DateTime meetingDate)
         {
-            //List<Member> ma = (from m in repository.MemberAssignments
-            //                    where m.AssignmentId == assignmentId
-            //                    select m.Member).ToList();
-
-            //List<UnavailableDate> ud = (from u in repository.UnavailableDates
-            //                            from m in ma
-            //                            where u.DateUnavailable == meetingDate && m.Id == u.MemberId
-            //                            select u).ToList();
-
+            
             List<Member> all = (from v in repository.MemberAssignments
                                 where v.AssignmentId == assignmentId
                                 select v.Member).ToList();
@@ -319,19 +311,10 @@ namespace MeetingManager
             return available;
         }
 
-        public Member NextMemberToAssign(List<Member> membersAvailable,Meeting currentMeeting)
+        public Member NextMemberToAssign(List<Member> membersAvailable, Meeting currentMeeting, Assignment currentAssignment)
         {
-            //List<MeetingAssignment> ma = (from m in repository.MeetingAssignments
-            //                              where m.ReferanceMark == false
-            //                              select m).ToList();
-
-            //List<MeetingAssignment> match = (from ch in membersAvailable
-            //                      from v in ma
-            //                      where v.MemberId == ch.Id
-            //                      select v).ToList();
-
             List<Member> newMembers = (from mem in membersAvailable
-                                       where mem.MeetingAssignments.Count <2
+                                       where mem.MeetingAssignments.Count == 0
                                        select mem).ToList();
 
             if (newMembers.Count != 0)
@@ -340,164 +323,72 @@ namespace MeetingManager
                 return newMembers[0];
             }
 
-            //match = match.OrderBy(o => o.Meeting.MeetingDate).ToList();
-            //Member nextMember = match[0].Member;
-            //match[0].ReferanceMark = true;
-            //UpdateMeetingAssignment(match[0]);
-            //return nextMember;
-            int tspanToBeat= new int();
+            int meetingCountToBeat = new int();
             int meetingCounter = 0;
-            //int tspanToBeatFuture=new int();
-            //int meetingCounterFuture = 0;
-            Member currentlySelected= new Member();
-            //Member secondary=new Member();
-            foreach(Member m in membersAvailable)
-            {
-                List<Member> alreadyAssigned = (from l in currentMeeting.MeetingAssignments
-                                                                 select l.Member).ToList();
-                List<Meeting> allMeeting = (from v in repository.Meetings
-                                    where v.CongregationId == currentMeeting.CongregationId
-                                    select v).ToList();
-                allMeeting = allMeeting.OrderByDescending(o => o.MeetingDate).ToList();
-                int index = allMeeting.IndexOf(currentMeeting);
-                List<Member> go = (from goat in allMeeting[index+1].MeetingAssignments
-                                       select goat.Member).ToList();
+            Member currentlySelected = new Member();
+            MeetingAssignment mLastMeetingAssignment = new MeetingAssignment();
+            List<Member> alreadyAssigned = (from l in currentMeeting.MeetingAssignments
+                                            select l.Member).ToList();
+            List<Meeting> allMeeting = (from v in repository.Meetings
+                                        where v.CongregationId == currentMeeting.CongregationId
+                                        select v).ToList();
+            allMeeting = allMeeting.OrderByDescending(o => o.MeetingDate).ToList();
+            int index = allMeeting.IndexOf(currentMeeting);
+            List<Member> go = (from goat in allMeeting[index + 1].MeetingAssignments
+                               select goat.Member).ToList();
 
-                if(alreadyAssigned.Any(p=>p.Id==m.Id)||go.Any(o=>o.Id==m.Id))
-                {
-                    continue;
-                }
+            foreach (Member m in membersAvailable)
+            {
                 List<MeetingAssignment> selectedMAssignments = (from d in repository.MeetingAssignments
                                                                 where d.MemberId == m.Id
                                                                 select d).ToList();
-
-                selectedMAssignments =selectedMAssignments.OrderByDescending(o => o.Meeting.MeetingDate).ToList();
-
-                #region oldcode
-
-                //if(selectedMAssignments[0].Meeting.MeetingDate>DateTime.Now)
-                //{
-                //    if(selectedMAssignments.Count<2)
-                //    {
-                //        foreach(DateTime d in EachDayLoop(DateTime.Now,selectedMAssignments[0].Meeting.MeetingDate.AddDays(-1)))
-                //        {
-                //            if(Convert.ToString(d.DayOfWeek)==m.Congregation.PublicMeetingDay||Convert.ToString(d.DayOfWeek)==m.Congregation.WeekMeetingDay)
-                //            {
-                //                meetingCounterFuture++;
-                //            }
-                //        }
-                //        //TimeSpan t = selectedMAssignments[0].Meeting.MeetingDate-DateTime.Now;
-                //        if(meetingCounterFuture>tspanToBeatFuture)
-                //        {
-                //            tspanToBeatFuture = meetingCounterFuture;
-                //            secondary = m;
-                            
-                //        }
-                //        if(meetingCounterFuture==tspanToBeatFuture)
-                //        {
-                //            if(secondary.MeetingAssignments.Count>m.MeetingAssignments.Count)
-                //            {
-                //                secondary = m;
-                //            }
-                //            if(secondary.MeetingAssignments.Count==m.MeetingAssignments.Count)
-                //            {
-                //                if(secondary.MemberAssignments.Count>m.MemberAssignments.Count)
-                //                {
-                //                    secondary = m;
-                //                }
-                //            }
-                //        }
-                //        meetingCounterFuture = 0;
-                //        continue;
-                //    }
-
-                //    foreach (DateTime d in EachDayLoop(selectedMAssignments[1].Meeting.MeetingDate.AddDays(1), selectedMAssignments[0].Meeting.MeetingDate.AddDays(-1)))
-                //    {
-                //        if (Convert.ToString(d.DayOfWeek) == m.Congregation.PublicMeetingDay || Convert.ToString(d.DayOfWeek) == m.Congregation.WeekMeetingDay)
-                //        {
-                //            meetingCounterFuture++;
-                //        }
-                //    }
-                    
-                //    if(secondary.Id==0)
-                //    {
-                //        tspanToBeatFuture = meetingCounterFuture;
-                //        secondary = m;
-                //        meetingCounterFuture = 0;
-                //        continue;
-                //    }
-                //    if (meetingCounterFuture>tspanToBeatFuture)
-                //    {
-                //        tspanToBeatFuture = meetingCounterFuture;
-                //        secondary = m;
-                //        meetingCounterFuture = 0;
-                        
-                //    }
-                //    if (meetingCounterFuture == tspanToBeatFuture)
-                //    {
-                //        if (secondary.MeetingAssignments.Count > m.MeetingAssignments.Count)
-                //        {
-                //            secondary = m;
-                //        }
-                //        if (secondary.MeetingAssignments.Count == m.MeetingAssignments.Count)
-                //        {
-                //            if (secondary.MemberAssignments.Count > m.MemberAssignments.Count)
-                //            {
-                //                secondary = m;
-                //            }
-                //        }
-                //    }
-                //    meetingCounterFuture = 0;
-                //    continue;
-
-                //}
-                #endregion
-                foreach (DateTime d in EachDayLoop(selectedMAssignments[1].Meeting.MeetingDate.AddDays(1), selectedMAssignments[0].Meeting.MeetingDate.AddDays(-1)))
+                selectedMAssignments = selectedMAssignments.OrderByDescending(o => o.Meeting.MeetingDate).ToList();
+                if (alreadyAssigned.Any(p => p.Id == m.Id))//skips if they are already assigned or previous assignment was same assignment.
+                {
+                    continue;
+                }
+                if (selectedMAssignments[0].AssignmentId == currentAssignment.Id && m.MemberAssignments.Count>2)
+                {
+                    continue;
+                }
+                
+                foreach (DateTime d in EachDayLoop(selectedMAssignments[0].Meeting.MeetingDate.AddDays(1), currentMeeting.MeetingDate.AddDays(-1)))
                 {
                     if (Convert.ToString(d.DayOfWeek) == m.Congregation.PublicMeetingDay || Convert.ToString(d.DayOfWeek) == m.Congregation.WeekMeetingDay)
                     {
                         meetingCounter++;
                     }
                 }
-                if(membersAvailable[0].Id==m.Id)
+                if (currentlySelected.Id==0)
                 {
-                    tspanToBeat = meetingCounter;
+                    meetingCountToBeat = meetingCounter;
                     currentlySelected = m;
+                    mLastMeetingAssignment = selectedMAssignments[0];
                     meetingCounter = 0;
                     continue;
                 }
-                if(meetingCounter>tspanToBeat)
+                if (meetingCounter > meetingCountToBeat)
                 {
-                    tspanToBeat = meetingCounter;
+                    meetingCountToBeat = meetingCounter;
                     currentlySelected = m;
+                    mLastMeetingAssignment = selectedMAssignments[0];
                     meetingCounter = 0;
                 }
 
-                if (meetingCounter == tspanToBeat)
+                if (meetingCounter == meetingCountToBeat)
                 {
-                    if (currentlySelected.MeetingAssignments.Count > m.MeetingAssignments.Count)
+                    if(selectedMAssignments[0].Assignment.Label!=currentAssignment.Label&&mLastMeetingAssignment.Assignment.Label==currentAssignment.Label)
                     {
                         currentlySelected = m;
+                        mLastMeetingAssignment = selectedMAssignments[0];
                     }
-                    if (currentlySelected.MeetingAssignments.Count == m.MeetingAssignments.Count)
-                    {
-                        if (currentlySelected.MemberAssignments.Count > m.MemberAssignments.Count)
-                        {
-                            currentlySelected = m;
-                        }
-                    }
+                    
                 }
                 meetingCounter = 0;
                 continue;
 
             }
             return currentlySelected;
-            //if (currentlySelected.Id !=0)
-            //{
-            //    return currentlySelected;
-            //}
-            
-                
             
         }
 
@@ -657,7 +548,7 @@ namespace MeetingManager
                     int counter = 1;
                     while (counter <= a.AmountPerMeeting)
                     {
-                        Member nextMember = NextMemberToAssign(membersAvailable,m);
+                        Member nextMember = NextMemberToAssign(membersAvailable, m, a);
                         MeetingAssignment ma = CreateMeetingAssignment(m.Id, nextMember.Id, a.Id, nextMember.CongregationId, scheduleDates.Id);
                         meetingAssignments.Add(ma);
                         counter++;
@@ -717,10 +608,18 @@ namespace MeetingManager
             return sd;
         }
 
+        public List<ScheduleDate> ScheduleDates()
+        {
+            List<ScheduleDate> allSd = (from s in repository.ScheduleDates
+                                        select s).ToList();
+            return allSd;
+        }
+
+
         public ScheduleDate CurrentScheduleDate()
         {
             ScheduleDate sd = (from s in repository.ScheduleDates
-                               where s.StartDate < DateTime.Now&&s.EndDate>DateTime.Now
+                               where s.StartDate < DateTime.Now && s.EndDate > DateTime.Now
                                select s).SingleOrDefault();
             return sd;
 
@@ -909,6 +808,31 @@ namespace MeetingManager
             repository.UnavailableDates.Remove(ud1);
             repository.SaveChanges();
 
+        }
+
+        public void DeleteScheduleMeetingAssignments(ScheduleDate sd)
+        {
+            ScheduleDate sdate = (from d in repository.ScheduleDates
+                               where d.Id == sd.Id
+                               select d).Single();
+
+            List<MeetingAssignment> ma = (from m in repository.MeetingAssignments
+                                          where m.ScheduleDateId == sd.Id
+                                          select m).ToList();
+            List<Meeting> meetings = (from meet in repository.Meetings
+                                      where meet.MeetingDate >= sd.StartDate && meet.MeetingDate <= sd.EndDate
+                                      select meet).ToList();
+            repository.ScheduleDates.Remove(sdate);
+            foreach (MeetingAssignment l in ma)
+            {
+                repository.MeetingAssignments.Remove(l);
+            }
+            foreach (Meeting moo in meetings)
+            {
+                repository.Meetings.Remove(moo);
+            }
+            repository.SaveChanges();
+            
         }
 
 

@@ -1,6 +1,6 @@
 ﻿namespace MeetingManagerUI
 {
-    partial class ScheduleForm
+    partial class CreateScheduleForm
     {
         /// <summary>
         /// Required designer variable.
@@ -75,7 +75,7 @@
             this.CreateScheduleButton.UseVisualStyleBackColor = true;
             this.CreateScheduleButton.Click += new System.EventHandler(this.CreateScheduleButton_Click);
             // 
-            // ScheduleForm
+            // CreateScheduleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -85,8 +85,8 @@
             this.Controls.Add(this.StartDateLabel);
             this.Controls.Add(this.EndDateCalendar);
             this.Controls.Add(this.StartDateCalenedar);
-            this.Name = "ScheduleForm";
-            this.Text = "Schedule Form";
+            this.Name = "CreateScheduleForm";
+            this.Text = "Create Schedule Form";
             this.ResumeLayout(false);
             this.PerformLayout();
 
