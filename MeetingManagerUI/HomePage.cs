@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,7 +21,7 @@ namespace MeetingManagerUI
             InitializeComponent();
             ThisMember = member;
             MemberNameLabel.Text = ThisMember.PreferredName ?? ThisMember.FirstName + " " + ThisMember.LastName;
-            if(member.LastLoginTime==null)
+            if (member.LastLoginTime == null)
             {
                 LastLoginLabel.Text = "Last Login: First Login TODAY!";
                 ThisMember.LastLoginTime = DateTime.Now;
@@ -28,22 +29,25 @@ namespace MeetingManagerUI
             }
             else
             {
-                LastLoginLabel.Text = "Last Login: " + ThisMember.LastLoginTime.ToString();
+
+                LastLoginLabel.Text = "Last Login: " + Convert.ToDateTime(ThisMember.LastLoginTime).ToString("g");
                 ThisMember.LastLoginTime = DateTime.Now;
                 manager.UpdateMember(ThisMember, false);
             }
 
-            ScheduleDate currentSchedule = manager.CurrentScheduleDate();
-            if(currentSchedule!=null)
+            CurrentSelectedSchedule = manager.CurrentScheduleDate();
+            if (CurrentSelectedSchedule != null)
             {
-                CurrentScheduleGridView = cc.Schedule(CurrentScheduleGridView, currentSchedule);
+                CurrentScheduleGridView = cc.Schedule(CurrentScheduleGridView, CurrentSelectedSchedule);
             }
-            
 
-            
+
+
         }
 
         public Member ThisMember { get; set; }
+
+        public ScheduleDate CurrentSelectedSchedule { get; set; }
         private void editMembersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EditMembersForm em = new EditMembersForm(ThisMember.CongregationId);
@@ -75,11 +79,43 @@ namespace MeetingManagerUI
 
         private void removeScheduleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EditScheduleForm esf = new EditScheduleForm();
+            EditScheduleForm esf = new EditScheduleForm(ThisMember,this);
             esf.WindowState = FormWindowState.Normal;
             esf.Show();
         }
 
-        
+        private void ExportButton_Click(object sender, EventArgs e)
+        {
+            ExportLocation.ShowDialog();
+            using (StreamWriter sw = new StreamWriter(ExportLocation.SelectedPath + "\\" + CurrentSelectedSchedule.StartDate.ToString("MMdd") + "_" + CurrentSelectedSchedule.EndDate.ToString("MMdd") + ".csv"))
+            {
+                foreach (DataGridViewColumn c in CurrentScheduleGridView.Columns)
+                {
+                    if (c.Index == 0)
+                    {
+                        continue;
+                    }
+                    sw.Write(c.Name.ToString() + ",");
+                }
+                sw.WriteLine();
+
+                foreach (DataGridViewRow r in CurrentScheduleGridView.Rows)
+                {
+                    foreach (DataGridViewCell c in r.Cells)
+                    {
+                        if (c.ColumnIndex == 0||c.Value==null)
+                        {
+                            continue;
+                        }
+                        sw.Write(c.Value.ToString() + ",");
+                    }
+                    sw.WriteLine();
+                }
+                sw.Close();
+            }
+            MessageBox.Show("File Created");
+        }
+
+
     }
 }

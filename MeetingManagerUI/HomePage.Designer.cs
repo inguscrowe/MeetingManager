@@ -38,11 +38,13 @@
             this.assignmentsProfileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.schedulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newScheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeScheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.congregationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CurrentScheduleGridView = new System.Windows.Forms.DataGridView();
             this.StartDateLabel = new System.Windows.Forms.Label();
             this.EndDateLabel = new System.Windows.Forms.Label();
-            this.removeScheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExportButton = new System.Windows.Forms.Button();
+            this.ExportLocation = new System.Windows.Forms.FolderBrowserDialog();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CurrentScheduleGridView)).BeginInit();
             this.SuspendLayout();
@@ -137,9 +139,17 @@
             // 
             this.newScheduleToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.newScheduleToolStripMenuItem.Name = "newScheduleToolStripMenuItem";
-            this.newScheduleToolStripMenuItem.Size = new System.Drawing.Size(186, 24);
+            this.newScheduleToolStripMenuItem.Size = new System.Drawing.Size(189, 24);
             this.newScheduleToolStripMenuItem.Text = "New Schedule";
             this.newScheduleToolStripMenuItem.Click += new System.EventHandler(this.newScheduleToolStripMenuItem_Click);
+            // 
+            // removeScheduleToolStripMenuItem
+            // 
+            this.removeScheduleToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.removeScheduleToolStripMenuItem.Name = "removeScheduleToolStripMenuItem";
+            this.removeScheduleToolStripMenuItem.Size = new System.Drawing.Size(189, 24);
+            this.removeScheduleToolStripMenuItem.Text = "Existing Schedules";
+            this.removeScheduleToolStripMenuItem.Click += new System.EventHandler(this.removeScheduleToolStripMenuItem_Click);
             // 
             // congregationToolStripMenuItem
             // 
@@ -177,19 +187,22 @@
             this.EndDateLabel.TabIndex = 7;
             this.EndDateLabel.Text = "End Date";
             // 
-            // removeScheduleToolStripMenuItem
+            // ExportButton
             // 
-            this.removeScheduleToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.removeScheduleToolStripMenuItem.Name = "removeScheduleToolStripMenuItem";
-            this.removeScheduleToolStripMenuItem.Size = new System.Drawing.Size(186, 24);
-            this.removeScheduleToolStripMenuItem.Text = "Remove Schedule";
-            this.removeScheduleToolStripMenuItem.Click += new System.EventHandler(this.removeScheduleToolStripMenuItem_Click);
+            this.ExportButton.Location = new System.Drawing.Point(150, 439);
+            this.ExportButton.Name = "ExportButton";
+            this.ExportButton.Size = new System.Drawing.Size(75, 23);
+            this.ExportButton.TabIndex = 8;
+            this.ExportButton.Text = "Export";
+            this.ExportButton.UseVisualStyleBackColor = true;
+            this.ExportButton.Click += new System.EventHandler(this.ExportButton_Click);
             // 
             // HomePage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(992, 501);
+            this.Controls.Add(this.ExportButton);
             this.Controls.Add(this.EndDateLabel);
             this.Controls.Add(this.StartDateLabel);
             this.Controls.Add(this.CurrentScheduleGridView);
@@ -224,5 +237,7 @@
         private System.Windows.Forms.ToolStripMenuItem newScheduleToolStripMenuItem;
         public System.Windows.Forms.DataGridView CurrentScheduleGridView;
         private System.Windows.Forms.ToolStripMenuItem removeScheduleToolStripMenuItem;
+        private System.Windows.Forms.Button ExportButton;
+        private System.Windows.Forms.FolderBrowserDialog ExportLocation;
     }
 }

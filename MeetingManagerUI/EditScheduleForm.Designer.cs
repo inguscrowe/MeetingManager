@@ -34,6 +34,10 @@
             this.DateEnd = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ViewButton = new System.Windows.Forms.Button();
             this.DeleteButton = new System.Windows.Forms.Button();
+            this.AddCancelMeetingButton = new System.Windows.Forms.Button();
+            this.SelectedScheduleLabel = new System.Windows.Forms.Label();
+            this.AddCancelMeetingPicker = new System.Windows.Forms.DateTimePicker();
+            this.ReasonTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.ScheduleGridBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,7 +48,7 @@
             this.ScheduleDateId,
             this.DateStart,
             this.DateEnd});
-            this.ScheduleGridBox.Location = new System.Drawing.Point(129, 12);
+            this.ScheduleGridBox.Location = new System.Drawing.Point(411, 24);
             this.ScheduleGridBox.Name = "ScheduleGridBox";
             this.ScheduleGridBox.RowHeadersVisible = false;
             this.ScheduleGridBox.Size = new System.Drawing.Size(240, 150);
@@ -70,16 +74,17 @@
             // 
             // ViewButton
             // 
-            this.ViewButton.Location = new System.Drawing.Point(129, 195);
+            this.ViewButton.Location = new System.Drawing.Point(411, 180);
             this.ViewButton.Name = "ViewButton";
             this.ViewButton.Size = new System.Drawing.Size(75, 23);
             this.ViewButton.TabIndex = 1;
             this.ViewButton.Text = "View";
             this.ViewButton.UseVisualStyleBackColor = true;
+            this.ViewButton.Click += new System.EventHandler(this.ViewButton_Click);
             // 
             // DeleteButton
             // 
-            this.DeleteButton.Location = new System.Drawing.Point(293, 194);
+            this.DeleteButton.Location = new System.Drawing.Point(576, 180);
             this.DeleteButton.Name = "DeleteButton";
             this.DeleteButton.Size = new System.Drawing.Size(75, 23);
             this.DeleteButton.TabIndex = 2;
@@ -87,11 +92,52 @@
             this.DeleteButton.UseVisualStyleBackColor = true;
             this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
             // 
+            // AddCancelMeetingButton
+            // 
+            this.AddCancelMeetingButton.Location = new System.Drawing.Point(72, 24);
+            this.AddCancelMeetingButton.Name = "AddCancelMeetingButton";
+            this.AddCancelMeetingButton.Size = new System.Drawing.Size(148, 23);
+            this.AddCancelMeetingButton.TabIndex = 3;
+            this.AddCancelMeetingButton.Text = "Add/Cancel Meeting";
+            this.AddCancelMeetingButton.UseVisualStyleBackColor = true;
+            this.AddCancelMeetingButton.Click += new System.EventHandler(this.AddCancelMeetingButton_Click);
+            // 
+            // SelectedScheduleLabel
+            // 
+            this.SelectedScheduleLabel.AutoSize = true;
+            this.SelectedScheduleLabel.Location = new System.Drawing.Point(448, 223);
+            this.SelectedScheduleLabel.Name = "SelectedScheduleLabel";
+            this.SelectedScheduleLabel.Size = new System.Drawing.Size(114, 13);
+            this.SelectedScheduleLabel.TabIndex = 5;
+            this.SelectedScheduleLabel.Text = "No Schedule Selected";
+            // 
+            // AddCancelMeetingPicker
+            // 
+            this.AddCancelMeetingPicker.Location = new System.Drawing.Point(45, 85);
+            this.AddCancelMeetingPicker.Name = "AddCancelMeetingPicker";
+            this.AddCancelMeetingPicker.Size = new System.Drawing.Size(200, 20);
+            this.AddCancelMeetingPicker.TabIndex = 6;
+            this.AddCancelMeetingPicker.Visible = false;
+            // 
+            // ReasonTextBox
+            // 
+            this.ReasonTextBox.Location = new System.Drawing.Point(45, 125);
+            this.ReasonTextBox.Name = "ReasonTextBox";
+            this.ReasonTextBox.Size = new System.Drawing.Size(200, 20);
+            this.ReasonTextBox.TabIndex = 7;
+            this.ReasonTextBox.Text = "**ENTER NOTE**";
+            this.ReasonTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ReasonTextBox.Visible = false;
+            // 
             // EditScheduleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(565, 261);
+            this.ClientSize = new System.Drawing.Size(684, 261);
+            this.Controls.Add(this.ReasonTextBox);
+            this.Controls.Add(this.AddCancelMeetingPicker);
+            this.Controls.Add(this.SelectedScheduleLabel);
+            this.Controls.Add(this.AddCancelMeetingButton);
             this.Controls.Add(this.DeleteButton);
             this.Controls.Add(this.ViewButton);
             this.Controls.Add(this.ScheduleGridBox);
@@ -99,6 +145,7 @@
             this.Text = "EditScheduleForm";
             ((System.ComponentModel.ISupportInitialize)(this.ScheduleGridBox)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -110,5 +157,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn DateEnd;
         private System.Windows.Forms.Button ViewButton;
         private System.Windows.Forms.Button DeleteButton;
+        private System.Windows.Forms.Button AddCancelMeetingButton;
+        private System.Windows.Forms.Label SelectedScheduleLabel;
+        private System.Windows.Forms.DateTimePicker AddCancelMeetingPicker;
+        private System.Windows.Forms.TextBox ReasonTextBox;
     }
 }

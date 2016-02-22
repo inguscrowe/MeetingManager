@@ -14,11 +14,16 @@ namespace MeetingManagerUI
     public partial class EditScheduleForm : Form
     {
         ClassManager manager = new ClassManager();
+        CommonControls cc = new CommonControls();
         ScheduleDate selected = new ScheduleDate();
-        public EditScheduleForm()
+        Member scheduler = new Member();
+        HomePage hopa;
+        public EditScheduleForm(Member thismember,HomePage hp)
         {
             InitializeComponent();
             RefreshScheduleBox();
+            hopa = hp;
+            scheduler = thismember;
         }
 
         public void RefreshScheduleBox()
@@ -43,6 +48,36 @@ namespace MeetingManagerUI
         private void ScheduleGridBox_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             selected = manager.ScheduleDatesByScheduleDateId(Convert.ToInt32(ScheduleGridBox.Rows[e.RowIndex].Cells[0].Value));
+            SelectedScheduleLabel.Text = "Schedule selected: " + selected.StartDate.ToShortDateString() + "-" + selected.EndDate.ToShortDateString();
+        }
+
+        private void AddCancelMeetingButton_Click(object sender, EventArgs e)
+        {
+            if(AddCancelMeetingButton.Text=="Add/Cancel Meeting")
+            {
+                AddCancelMeetingPicker.Visible = true;
+                ReasonTextBox.Visible = true;
+                AddCancelMeetingButton.Text = "Create/Remove Meeting";
+            }
+            else
+            {
+                DialogResult dialogResult = MessageBox.Show("Are you cancelling a meeting", "Meeting Canceled?", MessageBoxButtons.YesNo);
+                if(dialogResult==DialogResult.Yes)
+                {
+                    manager.CreateUnavailableDate(scheduler.Id, AddCancelMeetingPicker.Value, true, ReasonTextBox.Text);
+                }
+                AddCancelMeetingPicker.Visible = false;
+                ReasonTextBox.Visible = false;
+                AddCancelMeetingButton.Text = "Add/Cancel Meeting";
+                
+                
+            }
+        }
+
+        private void ViewButton_Click(object sender, EventArgs e)
+        {
+            hopa.CurrentScheduleGridView = cc.Schedule(hopa.CurrentScheduleGridView, selected);
+            hopa.CurrentSelectedSchedule = selected;
         }
     }
 }

@@ -49,6 +49,7 @@
             this.UserNameTextBox = new System.Windows.Forms.TextBox();
             this.PasswordTextBox = new System.Windows.Forms.TextBox();
             this.PasswordLabel = new System.Windows.Forms.Label();
+            this.DeleteMemberButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // FirstName
@@ -221,11 +222,23 @@
             this.PasswordLabel.TabIndex = 37;
             this.PasswordLabel.Text = "Password";
             // 
+            // DeleteMemberButton
+            // 
+            this.DeleteMemberButton.Location = new System.Drawing.Point(315, 232);
+            this.DeleteMemberButton.Name = "DeleteMemberButton";
+            this.DeleteMemberButton.Size = new System.Drawing.Size(116, 32);
+            this.DeleteMemberButton.TabIndex = 39;
+            this.DeleteMemberButton.Text = "Delete Member";
+            this.DeleteMemberButton.UseVisualStyleBackColor = true;
+            this.DeleteMemberButton.Visible = false;
+            this.DeleteMemberButton.Click += new System.EventHandler(this.DeleteMemberButton_Click);
+            // 
             // MemberForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(496, 362);
+            this.Controls.Add(this.DeleteMemberButton);
             this.Controls.Add(this.PasswordTextBox);
             this.Controls.Add(this.PasswordLabel);
             this.Controls.Add(this.UserNameTextBox);
@@ -277,5 +290,6 @@
         private System.Windows.Forms.TextBox UserNameTextBox;
         private System.Windows.Forms.TextBox PasswordTextBox;
         private System.Windows.Forms.Label PasswordLabel;
+        private System.Windows.Forms.Button DeleteMemberButton;
     }
 }

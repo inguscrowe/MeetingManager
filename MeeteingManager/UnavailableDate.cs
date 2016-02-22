@@ -21,6 +21,7 @@ namespace MeetingManager
         public string Reason { get; set; }
         public System.DateTime CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
+        public Nullable<int> CongregationId { get; set; }
     
         public virtual Member Member { get; set; }
     }

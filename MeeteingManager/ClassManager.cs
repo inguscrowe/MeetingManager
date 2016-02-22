@@ -278,7 +278,7 @@ namespace MeetingManager
 
             List<Member> congregationMembers = (from m in repository.Members
 
-                                                where m.CongregationId == congregationId
+                                                where m.CongregationId == congregationId && (m.IsDeleted == false || m.IsDeleted == null)
 
                                                 select m).ToList();
 
@@ -288,7 +288,7 @@ namespace MeetingManager
 
         public List<Member> MembersAvailable(int assignmentId, DateTime meetingDate)
         {
-            
+
             List<Member> all = (from v in repository.MemberAssignments
                                 where v.AssignmentId == assignmentId
                                 select v.Member).ToList();
@@ -347,11 +347,11 @@ namespace MeetingManager
                 {
                     continue;
                 }
-                if (selectedMAssignments[0].AssignmentId == currentAssignment.Id && m.MemberAssignments.Count>2)
+                if (selectedMAssignments[0].AssignmentId == currentAssignment.Id && m.MemberAssignments.Count > 2)
                 {
                     continue;
                 }
-                
+
                 foreach (DateTime d in EachDayLoop(selectedMAssignments[0].Meeting.MeetingDate.AddDays(1), currentMeeting.MeetingDate.AddDays(-1)))
                 {
                     if (Convert.ToString(d.DayOfWeek) == m.Congregation.PublicMeetingDay || Convert.ToString(d.DayOfWeek) == m.Congregation.WeekMeetingDay)
@@ -359,7 +359,7 @@ namespace MeetingManager
                         meetingCounter++;
                     }
                 }
-                if (currentlySelected.Id==0)
+                if (currentlySelected.Id == 0)
                 {
                     meetingCountToBeat = meetingCounter;
                     currentlySelected = m;
@@ -377,19 +377,19 @@ namespace MeetingManager
 
                 if (meetingCounter == meetingCountToBeat)
                 {
-                    if(selectedMAssignments[0].Assignment.Label!=currentAssignment.Label&&mLastMeetingAssignment.Assignment.Label==currentAssignment.Label)
+                    if (selectedMAssignments[0].Assignment.Label != currentAssignment.Label && mLastMeetingAssignment.Assignment.Label == currentAssignment.Label)
                     {
                         currentlySelected = m;
                         mLastMeetingAssignment = selectedMAssignments[0];
                     }
-                    
+
                 }
                 meetingCounter = 0;
                 continue;
 
             }
             return currentlySelected;
-            
+
         }
 
 
@@ -535,8 +535,14 @@ namespace MeetingManager
                 }
             }
 
+            List<UnavailableDate> cancelled = UnavailableDateByCongregationId(congregationId);
+
             foreach (Meeting m in meetings)
             {
+                if (cancelled.Any(p => p.DateUnavailable == m.MeetingDate))
+                {
+                    continue;
+                }
                 congoAssignments = congoAssignments.OrderBy(o => o.PositionOnSchedule).ToList();
                 foreach (Assignment a in congoAssignments)
                 {
@@ -598,6 +604,15 @@ namespace MeetingManager
                                             where u.MemberId == memberId
                                             select u).ToList();
             return udates;
+        }
+
+        public List<UnavailableDate> UnavailableDateByCongregationId(int congoId)
+        {
+            List<UnavailableDate> cancelled = (from c in repository.UnavailableDates
+                                               where c.MeetingCancelled == true && congoId == c.CongregationId
+                                               select c).ToList();
+
+            return cancelled;
         }
 
         public ScheduleDate ScheduleDatesByScheduleDateId(int scheduleDateId)
@@ -698,6 +713,7 @@ namespace MeetingManager
                 memberUpdate.BaptismDate = member.BaptismDate;
                 memberUpdate.UserName = member.UserName;
                 memberUpdate.Password = member.Password;
+                memberUpdate.IsDeleted = member.IsDeleted;
                 memberUpdate.LastLoginTime = DateTime.Now;
                 memberUpdate.UpdateDate = DateTime.Now;
                 memberUpdate.CongregationId = member.CongregationId;
@@ -813,8 +829,8 @@ namespace MeetingManager
         public void DeleteScheduleMeetingAssignments(ScheduleDate sd)
         {
             ScheduleDate sdate = (from d in repository.ScheduleDates
-                               where d.Id == sd.Id
-                               select d).Single();
+                                  where d.Id == sd.Id
+                                  select d).Single();
 
             List<MeetingAssignment> ma = (from m in repository.MeetingAssignments
                                           where m.ScheduleDateId == sd.Id
@@ -832,7 +848,53 @@ namespace MeetingManager
                 repository.Meetings.Remove(moo);
             }
             repository.SaveChanges();
-            
+
+            List<Member> deletedMembers = (from e in repository.Members
+                                           where e.IsDeleted == true && e.MeetingAssignments.Count == 0
+                                           select e).ToList();
+            foreach (Member del in deletedMembers)
+            {
+                DeleteMemberHard(del.Id);
+            }
+
+
+        }
+
+        public void DeleteMemberSoft(int memberId)
+        {
+            Member m = MemberByMemberId(memberId);
+
+
+            foreach (MemberAssignment w in m.MemberAssignments)
+            {
+                repository.MemberAssignments.Remove(w);
+            }
+
+            foreach (UnavailableDate q in m.UnavailableDates)
+            {
+                repository.UnavailableDates.Remove(q);
+            }
+
+            if (m.MeetingAssignments.Count == 0)
+            {
+                DeleteMemberHard(memberId);
+            }
+            else
+            {
+                m.IsDeleted = true;
+                m = UpdateMember(m, false);
+            }
+
+
+        }
+
+        public void DeleteMemberHard(int memberId)
+        {
+            Member m = MemberByMemberId(memberId);
+
+            repository.Members.Remove(m);
+            repository.SaveChanges();
+
         }
 
 

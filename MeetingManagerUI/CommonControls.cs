@@ -148,14 +148,34 @@ namespace MeetingManagerUI
                                       select meet.Meeting).ToList();
 
             meetings = meetings.Select(z => z).Distinct().ToList();
+
+            List<UnavailableDate> cancelled = manager.UnavailableDateByCongregationId(sd.CongregationId);
+            cancelled = cancelled.Where(z => z.DateUnavailable > sd.StartDate && z.DateUnavailable < sd.EndDate).ToList();
+            if(cancelled.Count!=0)
+            {
+                foreach(UnavailableDate u in cancelled)
+                {
+                    Meeting nm = new Meeting();
+                    nm.MeetingDate = u.DateUnavailable;
+                    meetings.Add(nm);
+                }
+            }
+            
+            meetings = meetings.OrderBy(o => o.MeetingDate).ToList();
+            
             int rowCounter = 0;
             foreach (Meeting meet in meetings)
             {
                 data.Rows.Add();
                 data.Rows[rowCounter].Cells[0].Value = meet.Id;
-                data.Rows[rowCounter].Cells[1].Value = meet.MeetingDate.DayOfWeek + ", " + meet.MeetingDate.ToString("MMM") + " " + meet.MeetingDate.Day;
+                data.Rows[rowCounter].Cells[1].Value = meet.MeetingDate.DayOfWeek + " " + meet.MeetingDate.ToString("MMM") + " " + meet.MeetingDate.Day;
 
                 List<MeetingAssignment> cahi = manager.MeetingAssignmentsByMeetingId(meet.Id);
+                if(cahi.Count==0)
+                {
+                    rowCounter++;
+                    continue;
+                }
 
                 cahi.OrderBy(o => o.Assignment.PositionOnSchedule).ToList();
 

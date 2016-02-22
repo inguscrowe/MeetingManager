@@ -48,6 +48,7 @@ namespace MeetingManagerUI
                     FirstName.Text = emf.SelectedMember.FirstName;
                     LastName.Text = emf.SelectedMember.LastName;
                     PreferredName.Text = emf.SelectedMember.PreferredName;
+                    DeleteMemberButton.Visible = true;
                     AddUpdateButton.Text = "Update Member";
                 }
             }
@@ -119,6 +120,11 @@ namespace MeetingManagerUI
                 MessageBox.Show(newMember.PreferredName+ " have been added to Members."); 
             }
             
+        }
+
+        private void DeleteMemberButton_Click(object sender, EventArgs e)
+        {
+            manager.DeleteMemberSoft(emf.SelectedMember.Id);
         }
 
         

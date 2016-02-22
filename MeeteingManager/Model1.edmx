@@ -147,6 +147,7 @@
           <Property Name="MemberId" Type="int" Nullable="false" />
           <Property Name="DateUnavailable" Type="date" Nullable="false" />
           <Property Name="MeetingCancelled" Type="bit" />
+          <Property Name="CongregationId" Type="int" />
           <Property Name="Reason" Type="varchar(max)" />
           <Property Name="CreateDate" Type="date" Nullable="false" />
           <Property Name="UpdateDate" Type="date" />
@@ -637,6 +638,7 @@
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UpdateDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Member" Relationship="Self.FK_UnavailableDates_Member" FromRole="UnavailableDates" ToRole="Member" />
+          <Property Name="CongregationId" Type="Int32" />
         </EntityType>
         <Association Name="FK_Assignment_Congregation">
           <End Role="Congregation" Type="Self.Congregation" Multiplicity="1" />
@@ -1092,6 +1094,7 @@
           <EntitySetMapping Name="UnavailableDates">
             <EntityTypeMapping TypeName="MeetingManagerModel.UnavailableDate">
               <MappingFragment StoreEntitySet="UnavailableDates">
+                <ScalarProperty Name="CongregationId" ColumnName="CongregationId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="MemberId" ColumnName="MemberId" />
                 <ScalarProperty Name="DateUnavailable" ColumnName="DateUnavailable" />
