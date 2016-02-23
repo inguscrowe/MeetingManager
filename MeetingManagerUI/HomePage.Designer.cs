@@ -45,6 +45,8 @@
             this.EndDateLabel = new System.Windows.Forms.Label();
             this.ExportButton = new System.Windows.Forms.Button();
             this.ExportLocation = new System.Windows.Forms.FolderBrowserDialog();
+            this.BeginningLabel = new System.Windows.Forms.Label();
+            this.EndingLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CurrentScheduleGridView)).BeginInit();
             this.SuspendLayout();
@@ -163,7 +165,7 @@
             this.CurrentScheduleGridView.AllowUserToAddRows = false;
             this.CurrentScheduleGridView.AllowUserToDeleteRows = false;
             this.CurrentScheduleGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.CurrentScheduleGridView.Location = new System.Drawing.Point(150, 89);
+            this.CurrentScheduleGridView.Location = new System.Drawing.Point(91, 75);
             this.CurrentScheduleGridView.Name = "CurrentScheduleGridView";
             this.CurrentScheduleGridView.Size = new System.Drawing.Size(722, 318);
             this.CurrentScheduleGridView.TabIndex = 3;
@@ -189,7 +191,7 @@
             // 
             // ExportButton
             // 
-            this.ExportButton.Location = new System.Drawing.Point(150, 439);
+            this.ExportButton.Location = new System.Drawing.Point(91, 413);
             this.ExportButton.Name = "ExportButton";
             this.ExportButton.Size = new System.Drawing.Size(75, 23);
             this.ExportButton.TabIndex = 8;
@@ -197,11 +199,31 @@
             this.ExportButton.UseVisualStyleBackColor = true;
             this.ExportButton.Click += new System.EventHandler(this.ExportButton_Click);
             // 
+            // BeginningLabel
+            // 
+            this.BeginningLabel.AutoSize = true;
+            this.BeginningLabel.Location = new System.Drawing.Point(234, 46);
+            this.BeginningLabel.Name = "BeginningLabel";
+            this.BeginningLabel.Size = new System.Drawing.Size(57, 13);
+            this.BeginningLabel.TabIndex = 9;
+            this.BeginningLabel.Text = "Beginning:";
+            // 
+            // EndingLabel
+            // 
+            this.EndingLabel.AutoSize = true;
+            this.EndingLabel.Location = new System.Drawing.Point(475, 46);
+            this.EndingLabel.Name = "EndingLabel";
+            this.EndingLabel.Size = new System.Drawing.Size(43, 13);
+            this.EndingLabel.TabIndex = 10;
+            this.EndingLabel.Text = "Ending:";
+            // 
             // HomePage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(992, 501);
+            this.Controls.Add(this.EndingLabel);
+            this.Controls.Add(this.BeginningLabel);
             this.Controls.Add(this.ExportButton);
             this.Controls.Add(this.EndDateLabel);
             this.Controls.Add(this.StartDateLabel);
@@ -232,12 +254,14 @@
         private System.Windows.Forms.ToolStripMenuItem congregationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editMembersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem assignmentsProfileToolStripMenuItem;
-        private System.Windows.Forms.Label StartDateLabel;
-        private System.Windows.Forms.Label EndDateLabel;
         private System.Windows.Forms.ToolStripMenuItem newScheduleToolStripMenuItem;
         public System.Windows.Forms.DataGridView CurrentScheduleGridView;
         private System.Windows.Forms.ToolStripMenuItem removeScheduleToolStripMenuItem;
         private System.Windows.Forms.Button ExportButton;
         private System.Windows.Forms.FolderBrowserDialog ExportLocation;
+        public System.Windows.Forms.Label StartDateLabel;
+        public System.Windows.Forms.Label EndDateLabel;
+        private System.Windows.Forms.Label BeginningLabel;
+        private System.Windows.Forms.Label EndingLabel;
     }
 }

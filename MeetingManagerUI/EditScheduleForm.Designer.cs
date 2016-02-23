@@ -38,6 +38,7 @@
             this.SelectedScheduleLabel = new System.Windows.Forms.Label();
             this.AddCancelMeetingPicker = new System.Windows.Forms.DateTimePicker();
             this.ReasonTextBox = new System.Windows.Forms.TextBox();
+            this.SpecialMeetingEventsListBox = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.ScheduleGridBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -113,7 +114,7 @@
             // 
             // AddCancelMeetingPicker
             // 
-            this.AddCancelMeetingPicker.Location = new System.Drawing.Point(45, 85);
+            this.AddCancelMeetingPicker.Location = new System.Drawing.Point(53, 170);
             this.AddCancelMeetingPicker.Name = "AddCancelMeetingPicker";
             this.AddCancelMeetingPicker.Size = new System.Drawing.Size(200, 20);
             this.AddCancelMeetingPicker.TabIndex = 6;
@@ -121,7 +122,7 @@
             // 
             // ReasonTextBox
             // 
-            this.ReasonTextBox.Location = new System.Drawing.Point(45, 125);
+            this.ReasonTextBox.Location = new System.Drawing.Point(53, 205);
             this.ReasonTextBox.Name = "ReasonTextBox";
             this.ReasonTextBox.Size = new System.Drawing.Size(200, 20);
             this.ReasonTextBox.TabIndex = 7;
@@ -129,11 +130,20 @@
             this.ReasonTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ReasonTextBox.Visible = false;
             // 
+            // SpecialMeetingEventsListBox
+            // 
+            this.SpecialMeetingEventsListBox.FormattingEnabled = true;
+            this.SpecialMeetingEventsListBox.Location = new System.Drawing.Point(53, 69);
+            this.SpecialMeetingEventsListBox.Name = "SpecialMeetingEventsListBox";
+            this.SpecialMeetingEventsListBox.Size = new System.Drawing.Size(200, 95);
+            this.SpecialMeetingEventsListBox.TabIndex = 8;
+            // 
             // EditScheduleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(684, 261);
+            this.Controls.Add(this.SpecialMeetingEventsListBox);
             this.Controls.Add(this.ReasonTextBox);
             this.Controls.Add(this.AddCancelMeetingPicker);
             this.Controls.Add(this.SelectedScheduleLabel);
@@ -161,5 +171,6 @@
         private System.Windows.Forms.Label SelectedScheduleLabel;
         private System.Windows.Forms.DateTimePicker AddCancelMeetingPicker;
         private System.Windows.Forms.TextBox ReasonTextBox;
+        private System.Windows.Forms.ListBox SpecialMeetingEventsListBox;
     }
 }

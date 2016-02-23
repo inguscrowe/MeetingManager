@@ -18,12 +18,24 @@ namespace MeetingManagerUI
         ScheduleDate selected = new ScheduleDate();
         Member scheduler = new Member();
         HomePage hopa;
-        public EditScheduleForm(Member thismember,HomePage hp)
+        public EditScheduleForm(Member thismember, HomePage hp)
         {
             InitializeComponent();
             RefreshScheduleBox();
             hopa = hp;
             scheduler = thismember;
+            RefreshEventsBox();
+        }
+
+        public void RefreshEventsBox()
+        {
+            SpecialMeetingEventsListBox.Items.Clear();
+            SpecialMeetingEventsListBox.Refresh();
+            List<UnavailableDate> ud = manager.UnavailableDateByCongregationId(scheduler.CongregationId);
+            foreach (UnavailableDate u in ud)
+            {
+                SpecialMeetingEventsListBox.Items.Add(u.DateUnavailable.ToShortDateString() + " - " + u.Reason.ToString());
+            }
         }
 
         public void RefreshScheduleBox()
@@ -42,7 +54,7 @@ namespace MeetingManagerUI
         {
             manager.DeleteScheduleMeetingAssignments(selected);
             RefreshScheduleBox();
-            MessageBox.Show("Schedule and Assignmetns deleted.");
+            MessageBox.Show("Schedule and Assignments deleted.");
         }
 
         private void ScheduleGridBox_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -53,7 +65,7 @@ namespace MeetingManagerUI
 
         private void AddCancelMeetingButton_Click(object sender, EventArgs e)
         {
-            if(AddCancelMeetingButton.Text=="Add/Cancel Meeting")
+            if (AddCancelMeetingButton.Text == "Add/Cancel Meeting")
             {
                 AddCancelMeetingPicker.Visible = true;
                 ReasonTextBox.Visible = true;
@@ -62,15 +74,15 @@ namespace MeetingManagerUI
             else
             {
                 DialogResult dialogResult = MessageBox.Show("Are you cancelling a meeting", "Meeting Canceled?", MessageBoxButtons.YesNo);
-                if(dialogResult==DialogResult.Yes)
+                if (dialogResult == DialogResult.Yes)
                 {
-                    manager.CreateUnavailableDate(scheduler.Id, AddCancelMeetingPicker.Value, true, ReasonTextBox.Text);
+                    manager.CreateUnavailableDate(scheduler.Id, AddCancelMeetingPicker.Value, true, ReasonTextBox.Text,scheduler.CongregationId);
                 }
+                RefreshEventsBox();
                 AddCancelMeetingPicker.Visible = false;
                 ReasonTextBox.Visible = false;
                 AddCancelMeetingButton.Text = "Add/Cancel Meeting";
-                
-                
+
             }
         }
 
@@ -78,6 +90,8 @@ namespace MeetingManagerUI
         {
             hopa.CurrentScheduleGridView = cc.Schedule(hopa.CurrentScheduleGridView, selected);
             hopa.CurrentSelectedSchedule = selected;
+            hopa.StartDateLabel.Text = selected.StartDate.ToShortDateString();
+            hopa.EndDateLabel.Text = selected.EndDate.ToShortDateString();
         }
     }
 }

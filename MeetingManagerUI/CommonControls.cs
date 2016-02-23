@@ -130,6 +130,7 @@ namespace MeetingManagerUI
             data.Columns[0].Visible = false;
             data.Columns[1].Name = "MeetingDate";
             data.Columns[1].HeaderText = "Meeting Date";
+            data.Columns[1].SortMode = DataGridViewColumnSortMode.NotSortable;
             
 
             List<MeetingAssignment> test = ma[0].Meeting.MeetingAssignments.ToList();
@@ -140,6 +141,11 @@ namespace MeetingManagerUI
             {
                 data.Columns[columnCounter].Name = test[assignmentcounter].Assignment.Label;
                 data.Columns[columnCounter].HeaderText = data.Columns[columnCounter].Name;
+                data.Columns[columnCounter].SortMode = DataGridViewColumnSortMode.NotSortable;
+                if(columnCounter == test.Count + 1)
+                {
+                    data.Columns[columnCounter].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill; 
+                }
                 columnCounter--;
                 assignmentcounter--;
             }

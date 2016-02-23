@@ -39,10 +39,9 @@ namespace MeetingManagerUI
             if (CurrentSelectedSchedule != null)
             {
                 CurrentScheduleGridView = cc.Schedule(CurrentScheduleGridView, CurrentSelectedSchedule);
+                StartDateLabel.Text = CurrentSelectedSchedule.StartDate.ToShortDateString();
+                EndDateLabel.Text = CurrentSelectedSchedule.EndDate.ToShortDateString();
             }
-
-
-
         }
 
         public Member ThisMember { get; set; }
@@ -87,7 +86,7 @@ namespace MeetingManagerUI
         private void ExportButton_Click(object sender, EventArgs e)
         {
             ExportLocation.ShowDialog();
-            using (StreamWriter sw = new StreamWriter(ExportLocation.SelectedPath + "\\" + CurrentSelectedSchedule.StartDate.ToString("MMdd") + "_" + CurrentSelectedSchedule.EndDate.ToString("MMdd") + ".csv"))
+            using (StreamWriter sw = new StreamWriter(ExportLocation.SelectedPath + "\\" + CurrentSelectedSchedule.StartDate.ToString("MMdd") + "_" + CurrentSelectedSchedule.EndDate.ToString("MMdd") + "_Assignments.csv"))
             {
                 foreach (DataGridViewColumn c in CurrentScheduleGridView.Columns)
                 {

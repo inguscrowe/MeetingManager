@@ -171,12 +171,13 @@ namespace MeetingManager
             return ud;
         }
 
-        public UnavailableDate CreateUnavailableDate(int memberId, DateTime dateUnavailable, bool meetingCancelled, string reason)
+        public UnavailableDate CreateUnavailableDate(int memberId, DateTime dateUnavailable, bool meetingCancelled, string reason, int congregationId)
         {
             UnavailableDate ud = new UnavailableDate();
             ud.MemberId = memberId;
             ud.DateUnavailable = dateUnavailable;
             ud.MeetingCancelled = meetingCancelled;
+            ud.CongregationId = congregationId;
             ud.Reason = reason;
             ud.CreateDate = DateTime.Now;
 
@@ -838,7 +839,16 @@ namespace MeetingManager
             List<Meeting> meetings = (from meet in repository.Meetings
                                       where meet.MeetingDate >= sd.StartDate && meet.MeetingDate <= sd.EndDate
                                       select meet).ToList();
+            List<UnavailableDate> undate = (from ud in repository.UnavailableDates
+                                            where ud.DateUnavailable >= sdate.StartDate && ud.DateUnavailable <= sdate.EndDate && sd.CongregationId == ud.CongregationId
+                                            select ud).ToList();
+            
             repository.ScheduleDates.Remove(sdate);
+
+            foreach(UnavailableDate date in undate)
+            {
+                repository.UnavailableDates.Remove(date);
+            }
             foreach (MeetingAssignment l in ma)
             {
                 repository.MeetingAssignments.Remove(l);
